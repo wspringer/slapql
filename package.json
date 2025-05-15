@@ -1,0 +1,22 @@
+{
+  "name": "graql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  },
+  "dependencies": {
+    "@bytecodealliance/jco": "^1.10.2",
+    "execa": "^9.5.2",
+    "wit-resolver-ts": "^0.1.1"
+  }
+}
