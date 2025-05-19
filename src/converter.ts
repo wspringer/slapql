@@ -1,4 +1,9 @@
-import { Resolved } from "wit-resolver-ts";
+import {
+  Resolved,
+  Type,
+  TypeDef,
+  Function,
+} from "wit-resolver-ts";
 import {
   GraphQLSchema,
   GraphQLType,
@@ -31,92 +36,6 @@ function toPascalCase(str: string): string {
     letter.toUpperCase()
   );
   return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
-}
-
-// Type definitions that match the actual data structure
-type Type =
-  | "bool"
-  | "u8"
-  | "u16"
-  | "u32"
-  | "u64"
-  | "s8"
-  | "s16"
-  | "s32"
-  | "s64"
-  | "f32"
-  | "f64"
-  | "char"
-  | "string"
-  | "error-context"
-  | number;
-
-interface Field {
-  name: string;
-  type: Type;
-  docs?: string;
-}
-
-interface Flag {
-  name: string;
-  docs?: string;
-}
-
-interface Case {
-  name: string;
-  type?: Type;
-  docs?: string;
-}
-
-interface EnumCase {
-  name: string;
-  docs?: string;
-}
-
-type TypeDefKind =
-  | { record: { fields: Field[] } }
-  | "resource"
-  | { handle: { own?: number; borrow?: number } }
-  | { flags: { flags: Flag[] } }
-  | { tuple: { types: Type[] } }
-  | { variant: { cases: Case[] } }
-  | { enum: { cases: EnumCase[] } }
-  | { option: Type }
-  | { result: { ok?: Type; err?: Type } }
-  | { list: Type }
-  | { future?: Type }
-  | { stream?: Type }
-  | { type: Type };
-
-type TypeOwner = { world: number } | { interface: number } | null;
-
-interface TypeDef {
-  name: string | null;
-  kind: TypeDefKind;
-  owner: TypeOwner;
-  docs?: string;
-  stability?: string;
-}
-
-type FunctionKind =
-  | "freestanding"
-  | "async-freestanding"
-  | { method: number }
-  | { "async-method": number }
-  | { static: number }
-  | { "async-static": number }
-  | { constructor: number };
-
-interface Function {
-  name: string;
-  kind: FunctionKind;
-  params: Array<{
-    name: string;
-    type: Type;
-  }>;
-  result?: Type;
-  docs?: string;
-  stability?: string;
 }
 
 // Helper to resolve type references (kind: { type: N })
