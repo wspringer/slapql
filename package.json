@@ -1,5 +1,5 @@
 {
-  "name": "graql",
+  "name": "snapql",
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
