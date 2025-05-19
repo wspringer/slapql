@@ -142,9 +142,7 @@ export function createGraphQLSchema(
   }
 
   function convertWitTypeToGraphQLOutput(type: Type): GraphQLOutputType {
-    console.error("convertWitTypeToGraphQLOutput called with:", { type });
     const resolvedTypeIndex = resolveTypeIndex(type, resolved);
-    console.error("Resolved type index:", { type, resolvedTypeIndex });
     if (resolvedTypeIndex === undefined) {
       if (typeof type === "string") {
         switch (type) {
@@ -184,7 +182,6 @@ export function createGraphQLSchema(
       return outputTypeCache.get(resolvedTypeIndex)!;
     }
     const witType = getWitType(resolvedTypeIndex);
-    console.error("Got WIT type:", { resolvedTypeIndex, witType });
     // If this is an alias (kind: { type: N }), immediately recurse to the target type
     if (
       typeof witType.kind === "object" &&
@@ -417,14 +414,6 @@ export function createGraphQLSchema(
       "function" in export_
     ) {
       const func = (export_ as { function: Function }).function;
-      console.error("Function debug:", {
-        name,
-        result: func.result,
-        resolvedResult:
-          func.result != null
-            ? resolveTypeIndex(func.result, resolved)
-            : undefined,
-      });
       const inputType = createInputType(name, func.params);
       const returnType =
         func.result != null

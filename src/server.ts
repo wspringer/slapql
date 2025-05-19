@@ -7,7 +7,6 @@ import { createGraphQLSchema } from "./converter.js";
 export async function startServer(wasmPath: string) {
   // Load the WASM module
   const [resolved, module] = await load(wasmPath);
-  console.error("Resolved:", JSON.stringify(resolved, null, 2));
 
   // Create the GraphQL schema
   const schema = createGraphQLSchema(resolved, module);

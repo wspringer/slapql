@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "bin": {
-    "snapql": "./dist/bin.js"
+    "slapql": "./dist/bin.js"
   },
   "scripts": {
     "test": "vitest",
