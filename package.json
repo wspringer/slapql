@@ -1,9 +1,9 @@
 {
   "name": "snapql",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "bin": {
-    "graql": "./dist/bin.js"
+    "snapql": "./dist/bin.js"
   },
   "scripts": {
     "test": "vitest",
