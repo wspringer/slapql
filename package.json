@@ -2,8 +2,13 @@
   "name": "graql",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": {
+    "graql": "./dist/bin.js"
+  },
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc",
+    "start": "node dist/bin.js"
   },
   "type": "module",
   "keywords": [],
@@ -15,8 +20,14 @@
     "vitest": "^3.1.2"
   },
   "dependencies": {
+    "@apollo/server": "^4.12.1",
     "@bytecodealliance/jco": "^1.10.2",
     "execa": "^9.5.2",
+    "graphql": "^16.8.1",
+    "graphql-tools": "^9.0.0",
     "wit-resolver-ts": "^0.1.1"
+  },
+  "resolutions": {
+    "graphql": "^16.8.1"
   }
 }

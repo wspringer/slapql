@@ -5,6 +5,10 @@ import { execa } from "execa";
 import { transpile } from "@bytecodealliance/jco";
 import { tmpdir } from "os";
 import { mkdirp } from "mkdirp";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export type Module = any;
 type WitAndModule = [Resolved, any];
@@ -13,8 +17,7 @@ type WitAndModule = [Resolved, any];
  * Loads the WASM file from a path
  */
 const loadWasm = async (file: string): Promise<Uint8Array> => {
-  const wasmPath = path.resolve(__dirname, file);
-  return readFile(wasmPath);
+  return readFile(file);
 };
 
 /**
@@ -41,6 +44,22 @@ const loadModule = async (wasm: Uint8Array) => {
   const transpiled = await transpile(wasm);
   const tmp = await mkdtemp(join(tmpdir(), "wasm-tmp-"));
   let modulePath: string | undefined;
+
+  // Create a package.json in the temp directory to mark it as an ES module
+  await writeFile(
+    join(tmp, "package.json"),
+    JSON.stringify({ type: "module" })
+  );
+
+  // Create a symlink to the project's node_modules
+  await execa(
+    "ln",
+    ["-s", path.resolve(process.cwd(), "node_modules"), "node_modules"],
+    {
+      cwd: tmp,
+    }
+  );
+
   for (const [name, content] of Object.entries(transpiled.files)) {
     const filePath = path.resolve(tmp, name);
     if (name === "component.js") {
@@ -49,9 +68,12 @@ const loadModule = async (wasm: Uint8Array) => {
     await mkdirp(path.dirname(filePath));
     await writeFile(filePath, content);
   }
+
   if (!modulePath) {
     throw new Error("modulePath is undefined");
   }
+
+  // Use dynamic import to load the module
   return import(modulePath);
 };
 

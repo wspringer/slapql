@@ -62,3 +62,5 @@ build
 *.swp
 *.swo
 .DS_Store
+
+*.wasm
