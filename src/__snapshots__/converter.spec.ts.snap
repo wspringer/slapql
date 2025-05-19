@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createGraphQLSchema > should create a GraphQL schema 1`] = `
+"type Query {
+  reverse(input: reverseInput): String
+}
+
+input reverseInput {
+  str: String!
+}"
+`;
